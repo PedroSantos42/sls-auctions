@@ -1,7 +1,7 @@
 import AWS from 'aws-sdk';
-import commonMiddleware from '../lib/commonMiddleware';
 import createError from 'http-errors';
 import valitor from '@middy/validator';
+import commonMiddleware from '../lib/commonMiddleware';
 import getAuctionsSchema from '../lib/schemas/getAuctionsSchema';
 
 const dynamodb = new AWS.DynamoDB.DocumentClient();
@@ -17,7 +17,7 @@ async function getAuctions(event, context) {
       ':status': status,
     },
     ExpressionAttributeNames: {
-      '#status': 'status'
+      '#status': 'status',
     },
   };
 
@@ -34,10 +34,10 @@ async function getAuctions(event, context) {
     console.log(error);
     throw new createError.InternalServerError(error);
   }
-};
+}
 
 export const handler = commonMiddleware(getAuctions)
   .use(valitor({
     inputSchema: getAuctionsSchema,
-    useDefaults: true
+    useDefaults: true,
   }));

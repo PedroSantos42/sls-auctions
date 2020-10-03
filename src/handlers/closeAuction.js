@@ -8,11 +8,11 @@ export async function closeAuction(auction) {
     Key: { id: auction.id },
     UpdateExpression: 'set #status = :status',
     ExpressionAttributeValues: {
-      ':status': 'CLOSED'
+      ':status': 'CLOSED',
     },
     ExpressionAttributeNames: {
-      '#status': 'status'
-    }
+      '#status': 'status',
+    },
   };
 
   const result = await dynamodb.update(params).promise();
